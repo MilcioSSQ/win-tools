@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="screenshots/banner.png" width="100%" alt="win-tools" />
+</p>
+
 # win-tools
 
 A personal Windows utility kit — one launcher, ten tools, no bloat.
@@ -22,6 +26,38 @@ A personal Windows utility kit — one launcher, ten tools, no bloat.
 | 8 | **System info** | OS, CPU, GPU, RAM, disk, uptime, process count |
 | 9 | **Power plan switcher** | Switch between Balanced, High performance, and Power saver |
 | 10 | **Dark mode toggle** | Switch Windows dark / light mode without opening Settings |
+
+---
+
+## Screenshots
+
+<details open>
+<summary><b>Main menu</b></summary>
+
+![Menu](screenshots/menu.png)
+
+</details>
+
+<details>
+<summary><b>System info</b></summary>
+
+![System info](screenshots/sysinfo.png)
+
+</details>
+
+<details>
+<summary><b>Gaming tweaks</b></summary>
+
+![Gaming tweaks](screenshots/gaming.png)
+
+</details>
+
+<details>
+<summary><b>Temp & cache cleaner</b></summary>
+
+![Cleaner](screenshots/cleaner.png)
+
+</details>
 
 ---
 
@@ -58,6 +94,7 @@ win-tools/
 │   ├── sysinfo.ps1
 │   ├── powerplan.ps1
 │   └── darkmode.ps1
+├── screenshots/
 ├── LICENSE
 └── README.md
 ```
@@ -67,7 +104,7 @@ win-tools/
 ## Notes
 
 - All changes made by **gaming tweaks** and **autostart cleaner** are reversible — backups are stored in `%LOCALAPPDATA%`.
-- **Bloatware remover** only targets known junk; Xbox, Store, and your drivers are never touched.
+- **Bloatware remover** only targets known junk. Xbox, Store, and your drivers are never touched.
 - **Mouse jiggle** runs until you close the window or press Ctrl+C.
 
 ## License
