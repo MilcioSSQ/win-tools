@@ -10,7 +10,7 @@ A personal Windows utility kit — one launcher, ten tools, no bloat.
 ![PowerShell](https://img.shields.io/badge/PowerShell-5.1%2B-5391FE?logo=powershell&logoColor=white)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
----
+--- 
 
 ## Tools
 
