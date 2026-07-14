@@ -61,7 +61,21 @@ A personal Windows utility kit — one launcher, ten tools, no bloat.
 
 ---
 
-## Usage
+## Quick Start
+
+Paste this into PowerShell — that's it:
+
+```powershell
+irm https://raw.githubusercontent.com/MilcioSSQ/win-tools/main/install.ps1 | iex
+```
+
+> Downloads the latest version, elevates to admin, and opens the menu. Nothing is installed permanently.
+
+---
+
+## Manual Usage
+
+If you cloned or downloaded the repo:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\win-tools.ps1
@@ -82,6 +96,7 @@ The launcher elevates itself automatically — just approve the UAC prompt.
 
 ```
 win-tools/
+├── install.ps1          # one-line launcher (irm | iex)
 ├── win-tools.ps1        # main launcher / menu
 ├── tools/
 │   ├── bloatware.ps1
