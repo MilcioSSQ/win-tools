@@ -1,112 +1,218 @@
-<p align="center">
-  <img src="screenshots/banner.png" width="100%" alt="win-tools" />
-</p>
+# Win-Tools Dashboard
 
-# win-tools
+A modern, beautiful **Electron + React** dashboard for the Win-Tools PowerShell utility suite. Replace the console with a sleek, neon-themed UI.
 
-A personal Windows utility kit — one launcher, ten tools, no bloat.
-
-![Platform](https://img.shields.io/badge/platform-Windows%2010%20%2F%2011-0078D6?logo=windows&logoColor=white)
-![PowerShell](https://img.shields.io/badge/PowerShell-5.1%2B-5391FE?logo=powershell&logoColor=white)
-![License](https://img.shields.io/badge/license-MIT-green)
-
---- 
-
-## Tools
-
-| # | Tool | What it does |
-|---|------|-------------|
-| 1 | **Bloatware remover** | Removes pre-installed UWP junk (News, Bing Weather, Skype, TikTok, …) |
-| 2 | **Autostart cleaner** | Lists and disables unnecessary startup entries; protects drivers and audio |
-| 3 | **Temp & cache cleaner** | Clears `%TEMP%`, Windows Temp, Prefetch, browser cache, pip cache |
-| 4 | **Mouse jiggle** | Moves the mouse ±1 px every 5 minutes to prevent sleep / screensaver |
-| 5 | **Gaming tweaks** | Mouse acceleration off, Game DVR off, GPU scheduling, MMCSS, power plan |
-| 6 | **Defender scan** | Update signatures + quick / full / offline scan from one menu |
-| 7 | **Network info** | Local IPs, gateway, DNS, MAC, public IP, ping target |
-| 8 | **System info** | OS, CPU, GPU, RAM, disk, uptime, process count |
-| 9 | **Power plan switcher** | Switch between Balanced, High performance, and Power saver |
-| 10 | **Dark mode toggle** | Switch Windows dark / light mode without opening Settings |
+![Dashboard Preview](screenshot.png)
 
 ---
 
-## Screenshots
+## Features
 
-<details open>
-<summary><b>Main menu</b></summary>
+✨ **Modern UI**
+- Dark theme with neon (#00ff88) accents
+- Responsive grid layout
+- Smooth animations & transitions
+- Real-time system monitoring
 
-![Menu](screenshots/menu.png)
+🎮 **System Monitoring**
+- Live CPU, RAM, and Storage stats
+- System uptime tracking
+- Progress visualizations
+- Auto-refresh every 5 seconds
 
-</details>
+⚡ **One-Click Tools**
+- All 10 Win-Tools integrated
+- Run tools directly from UI
+- Real-time status feedback
+- Tool execution history
 
-<details>
-<summary><b>System info</b></summary>
+🎨 **UI/UX**
+- Tab-based navigation (Dashboard, Tools, Settings)
+- Quick action buttons
+- Visual tool status indicators
+- Beautiful card-based layout
 
-![System info](screenshots/sysinfo.png)
+---
 
-</details>
+## Tech Stack
 
-<details>
-<summary><b>Gaming tweaks</b></summary>
+```
+Frontend:     React 18 + React Icons
+Desktop:      Electron
+Styling:      CSS3 with animations
+Backend:      Node.js + PowerShell
+```
 
-![Gaming tweaks](screenshots/gaming.png)
+---
 
-</details>
+## Setup & Installation
 
-<details>
-<summary><b>Temp & cache cleaner</b></summary>
+### Prerequisites
+- Node.js 14+
+- npm or yarn
+- Windows 10/11
+- PowerShell 5.1+
 
-![Cleaner](screenshots/cleaner.png)
+### Installation
 
-</details>
+1. **Clone/Navigate to project**
+```bash
+cd win-tools-dashboard
+```
+
+2. **Install dependencies**
+```bash
+npm install
+```
+
+3. **Ensure win-tools repo is in parent directory**
+```
+win-tools-dashboard/
+../win-tools-main/
+  ├── tools/
+  ├── screenshots/
+  └── README.md
+```
+
+4. **Start development mode**
+```bash
+npm run electron-dev
+```
+
+This opens the Electron app and the React dev server together.
 
 ---
 
 ## Usage
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\win-tools.ps1
+### Development
+```bash
+npm run electron-dev      # Start dev mode with hot-reload
 ```
 
-Or run any tool standalone:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\tools\sysinfo.ps1
-powershell -ExecutionPolicy Bypass -File .\tools\cleaner.ps1
+### Building
+```bash
+npm run electron-build    # Build standalone executable
 ```
 
-The launcher elevates itself automatically — just approve the UAC prompt.
+Output: `dist/` folder with `.exe` installer and portable version
 
 ---
 
-## Structure
+## Dashboard Pages
 
-```
-win-tools/
-├── win-tools.ps1        # main launcher / menu
-├── tools/
-│   ├── bloatware.ps1
-│   ├── autostart.ps1
-│   ├── cleaner.ps1
-│   ├── jiggle.ps1
-│   ├── gaming.ps1
-│   ├── defender.ps1
-│   ├── network.ps1
-│   ├── sysinfo.ps1
-│   ├── powerplan.ps1
-│   └── darkmode.ps1
-├── screenshots/
-├── LICENSE
-└── README.md
-```
+### 1. **Dashboard** 📊
+- System stats in card grid
+- Memory usage progress bar
+- CPU & uptime info
+- Quick action buttons (Gaming Mode, Clean, Scan)
+
+### 2. **Tools** 🛠️
+- Grid of all 10 tools
+- One-click execution
+- Status messages
+- Visual feedback (running/completed)
+
+### 3. **Settings** ⚙️
+- Theme toggle (dark/light)
+- Auto-refresh settings
+- About section
 
 ---
 
-## Notes
+## Integrated Tools
 
-- All changes made by **gaming tweaks** and **autostart cleaner** are reversible — backups are stored in `%LOCALAPPDATA%`.
-- **Bloatware remover** only targets known junk. Xbox, Store, and your drivers are never touched.
-- **Mouse jiggle** runs until you close the window or press Ctrl+C.
+All tools from [Win-Tools](../win-tools-main):
+
+| # | Tool | Function |
+|---|------|----------|
+| 1 | **Bloatware Remover** | Remove UWP junk apps |
+| 2 | **Autostart Cleaner** | Clean startup programs |
+| 3 | **Cleaner** | Delete temp/cache files |
+| 4 | **Mouse Jiggle** | Prevent sleep/screensaver |
+| 5 | **Gaming Tweaks** | Optimize for gaming |
+| 6 | **Defender Scan** | Run antivirus scan |
+| 7 | **Network Info** | View network stats |
+| 8 | **System Info** | Detailed system details |
+| 9 | **Power Plan** | Change power settings |
+| 10 | **Dark Mode** | Toggle Windows theme |
+
+---
+
+## Architecture
+
+```
+win-tools-dashboard/
+├── main.js                 # Electron main process
+├── preload.js             # IPC bridge
+├── index.html             # HTML shell
+├── package.json           # Dependencies
+└── src/
+    ├── index.js           # React entry
+    ├── App.js             # Main component
+    └── App.css            # Styling
+```
+
+### IPC Handlers
+- `get-system-info` - Fetch OS, CPU, RAM stats
+- `run-tool` - Execute PowerShell script
+- `get-disk-info` - Get disk usage
+
+---
+
+## Styling & Theme
+
+### Color Scheme
+```css
+Primary:      #00ff88 (Neon green)
+Dark BG:      #0f0f1e
+Card BG:      rgba(30, 30, 50, 0.8)
+Text:         #e0e0e0
+Accent:       Neon glow effects
+```
+
+### Responsive
+- Desktop: Full grid layout
+- Tablet: 2-column grid
+- Mobile: Single column
+
+---
+
+## Performance
+
+- ⚡ System info refreshes every 5 seconds
+- 🎨 Smooth 60fps animations
+- 💾 Minimal memory footprint
+- 🔄 Efficient IPC communication
+
+---
+
+## Known Limitations
+
+- Some tools require **Admin privileges** (auto-elevated via UAC)
+- Mouse Jiggle runs in console window (separate process)
+- Defender Scan takes time; tab remains responsive
+
+---
+
+## Future Enhancements
+
+- [ ] Tool scheduling/automation
+- [ ] Settings persistence
+- [ ] Tool logs/history view
+- [ ] System tray minimization
+- [ ] Custom tool shortcuts
+- [ ] Telemetry dashboard
+- [ ] Auto-update checker
+
+---
+
+## Credits
+
+Dashboard built for [Win-Tools](../win-tools-main) by **MilcioSSQ**
+
+---
 
 ## License
 
-[MIT](LICENSE) © MilcioSSQ
+MIT © [MilcioSSQ](https://github.com/MilcioSSQ)
