@@ -1,67 +1,23 @@
-<p align="center">
+<div align="center">
   <img src="screenshots/banner.png" width="100%" alt="win-tools" />
-</p>
+</div>
 
-# win-tools
+<div align="center">
 
-A personal Windows utility kit — one launcher, ten tools, no bloat.
+# 🛠️ win-tools
 
-![Platform](https://img.shields.io/badge/platform-Windows%2010%20%2F%2011-0078D6?logo=windows&logoColor=white)
-![PowerShell](https://img.shields.io/badge/PowerShell-5.1%2B-5391FE?logo=powershell&logoColor=white)
-![License](https://img.shields.io/badge/license-MIT-green)
+**A personal Windows utility kit — one launcher, ten tools, no bloat.**
 
---- 
+![Platform](https://img.shields.io/badge/platform-Windows%2010%20%2F%2011-0078D6?style=for-the-badge&logo=windows&logoColor=white)
+![PowerShell](https://img.shields.io/badge/PowerShell-5.1%2B-5391FE?style=for-the-badge&logo=powershell&logoColor=white)
+![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
+![Tools](https://img.shields.io/badge/tools-10-FF6B6B?style=for-the-badge)
 
-## Tools
-
-| # | Tool | What it does |
-|---|------|-------------|
-| 1 | **Bloatware remover** | Removes pre-installed UWP junk (News, Bing Weather, Skype, TikTok, …) |
-| 2 | **Autostart cleaner** | Lists and disables unnecessary startup entries; protects drivers and audio |
-| 3 | **Temp & cache cleaner** | Clears `%TEMP%`, Windows Temp, Prefetch, browser cache, pip cache |
-| 4 | **Mouse jiggle** | Moves the mouse ±1 px every 5 minutes to prevent sleep / screensaver |
-| 5 | **Gaming tweaks** | Mouse acceleration off, Game DVR off, GPU scheduling, MMCSS, power plan |
-| 6 | **Defender scan** | Update signatures + quick / full / offline scan from one menu |
-| 7 | **Network info** | Local IPs, gateway, DNS, MAC, public IP, ping target |
-| 8 | **System info** | OS, CPU, GPU, RAM, disk, uptime, process count |
-| 9 | **Power plan switcher** | Switch between Balanced, High performance, and Power saver |
-| 10 | **Dark mode toggle** | Switch Windows dark / light mode without opening Settings |
+</div>
 
 ---
 
-## Screenshots
-
-<details open>
-<summary><b>Main menu</b></summary>
-
-![Menu](screenshots/menu.png)
-
-</details>
-
-<details>
-<summary><b>System info</b></summary>
-
-![System info](screenshots/sysinfo.png)
-
-</details>
-
-<details>
-<summary><b>Gaming tweaks</b></summary>
-
-![Gaming tweaks](screenshots/gaming.png)
-
-</details>
-
-<details>
-<summary><b>Temp & cache cleaner</b></summary>
-
-![Cleaner](screenshots/cleaner.png)
-
-</details>
-
----
-
-## Quick Start
+## ⚡ Quick Start
 
 Paste this into PowerShell — that's it:
 
@@ -73,7 +29,60 @@ irm https://raw.githubusercontent.com/MilcioSSQ/win-tools/main/install.ps1 | iex
 
 ---
 
-## Manual Usage
+## 🧰 Tools
+
+| # | Tool | What it does |
+|---|------|-------------|
+| 1 | **Bloatware Remover** | Removes pre-installed UWP junk (News, Bing Weather, Skype, TikTok, …) |
+| 2 | **Autostart Cleaner** | Lists and disables unnecessary startup entries; protects drivers and audio |
+| 3 | **Temp & Cache Cleaner** | Clears `%TEMP%`, Windows Temp, Prefetch, browser cache, pip cache |
+| 4 | **Mouse Jiggle** | Moves the mouse ±1 px every 5 min to prevent sleep / screensaver |
+| 5 | **Gaming Tweaks** | Mouse acceleration off, Game DVR off, GPU scheduling, MMCSS, power plan |
+| 6 | **Defender Scan** | Update signatures + quick / full / offline scan from one menu |
+| 7 | **Network Info** | Local IPs, gateway, DNS, MAC, public IP, ping target |
+| 8 | **System Info** | OS, CPU, GPU, RAM, disk, uptime, process count |
+| 9 | **Power Plan Switcher** | Switch between Balanced, High Performance, and Power Saver |
+| 10 | **Dark Mode Toggle** | Switch Windows dark / light mode without opening Settings |
+
+---
+
+## 📸 Screenshots
+
+<details open>
+<summary><b>Main Menu</b></summary>
+<br/>
+<div align="center">
+  <img src="screenshots/menu.png" width="600" alt="Menu"/>
+</div>
+</details>
+
+<details>
+<summary><b>System Info</b></summary>
+<br/>
+<div align="center">
+  <img src="screenshots/sysinfo.png" width="600" alt="System Info"/>
+</div>
+</details>
+
+<details>
+<summary><b>Gaming Tweaks</b></summary>
+<br/>
+<div align="center">
+  <img src="screenshots/gaming.png" width="600" alt="Gaming Tweaks"/>
+</div>
+</details>
+
+<details>
+<summary><b>Temp & Cache Cleaner</b></summary>
+<br/>
+<div align="center">
+  <img src="screenshots/cleaner.png" width="600" alt="Cleaner"/>
+</div>
+</details>
+
+---
+
+## 💻 Manual Usage
 
 If you cloned or downloaded the repo:
 
@@ -92,7 +101,7 @@ The launcher elevates itself automatically — just approve the UAC prompt.
 
 ---
 
-## Structure
+## 📂 Structure
 
 ```
 win-tools/
@@ -116,12 +125,25 @@ win-tools/
 
 ---
 
-## Notes
+## 📝 Notes
 
-- All changes made by **gaming tweaks** and **autostart cleaner** are reversible — backups are stored in `%LOCALAPPDATA%`.
-- **Bloatware remover** only targets known junk. Xbox, Store, and your drivers are never touched.
-- **Mouse jiggle** runs until you close the window or press Ctrl+C.
+- All changes made by **Gaming Tweaks** and **Autostart Cleaner** are reversible — backups are stored in `%LOCALAPPDATA%`.
+- **Bloatware Remover** only targets known junk. Xbox, Store, and your drivers are never touched.
+- **Mouse Jiggle** runs until you close the window or press `Ctrl+C`.
 
-## License
+---
+
+<div align="center">
+
+## 🤝 Contributing
+
+Issues and pull requests are welcome!
+
+---
+
+![Made by](https://img.shields.io/badge/Made%20by-MilcioSSQ-FF6B6B?style=flat-square&logo=github&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
 [MIT](LICENSE) © MilcioSSQ
+
+</div>
