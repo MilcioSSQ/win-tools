@@ -7,13 +7,18 @@
     Each tool lives in ./tools/ and can also be run standalone.
 #>
 
-$principal = [Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()
-if (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-    Start-Process powershell.exe -Verb RunAs -ArgumentList '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', "`"$PSCommandPath`""
-    exit
+# Fix: $PSScriptRoot ist leer nach Admin-Elevation
+if (-not $PSScriptRoot) {
+    $root = Split-Path -Parent (Resolve-Path $MyInvocation.MyCommand.Path)
+} else {
+    $root = $PSScriptRoot
 }
 
-$root = $PSScriptRoot
+$principal = [Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()
+if (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    Start-Process powershell.exe -Verb RunAs -ArgumentList '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', "`"$($root)\win-tools.ps1`""
+    exit
+}
 
 function Invoke-Tool($name) {
     $path = Join-Path $root "tools\$name.ps1"
