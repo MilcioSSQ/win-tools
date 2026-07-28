@@ -1,6 +1,6 @@
 #Requires -Version 5.1
 Write-Host "`n  System Info" -ForegroundColor Cyan
-Write-Host "  ─────────────────────────────────────────────────"
+Write-Host "  -------------------------------------------------"
 
 $os  = Get-CimInstance Win32_OperatingSystem
 $cpu = Get-CimInstance Win32_Processor | Select-Object -First 1

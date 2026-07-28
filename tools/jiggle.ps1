@@ -10,8 +10,8 @@ public class Mouse {
 '@
 
 $interval = 5
-Write-Host "`n  Mouse Jiggle  (every ${interval} min)  —  Ctrl+C to stop" -ForegroundColor Cyan
-Write-Host "  ─────────────────────────────────────────────────"
+Write-Host "`n  Mouse Jiggle  (every ${interval} min)  -  Ctrl+C to stop" -ForegroundColor Cyan
+Write-Host "  -------------------------------------------------"
 
 while ($true) {
     $p = New-Object Mouse+POINT

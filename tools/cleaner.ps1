@@ -9,7 +9,7 @@ $targets = @(
 )
 
 Write-Host "`n  Temp & Cache Cleaner" -ForegroundColor Cyan
-Write-Host "  ─────────────────────────────────────────────────"
+Write-Host "  -------------------------------------------------"
 
 $total = 0
 foreach ($path in $targets) {
@@ -22,7 +22,7 @@ foreach ($path in $targets) {
     }
 }
 
-Write-Host ("  ─────────────────────────────────────────────────")
+Write-Host ("  -------------------------------------------------")
 Write-Host ("  Total freeable: {0:N1} MB" -f ($total / 1MB)) -ForegroundColor White
 Write-Host ""
 

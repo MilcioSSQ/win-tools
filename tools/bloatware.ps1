@@ -10,14 +10,14 @@ $bloat = @(
 )
 
 Write-Host "`n  Bloatware Remover" -ForegroundColor Cyan
-Write-Host "  ─────────────────────────────────────────────────"
+Write-Host "  -------------------------------------------------"
 
 $found = foreach ($p in $bloat) {
     Get-AppxPackage -AllUsers -Name $p -ErrorAction SilentlyContinue
 }
 $found = @($found | Sort-Object Name -Unique)
 
-if (-not $found) { Write-Host "  Nothing to remove — already clean." -ForegroundColor Green; return }
+if (-not $found) { Write-Host "  Nothing to remove - already clean." -ForegroundColor Green; return }
 
 $found | ForEach-Object { Write-Host "  - $($_.Name)" -ForegroundColor Yellow }
 Write-Host ""

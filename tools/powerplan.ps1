@@ -6,7 +6,7 @@ $plans = @{
 }
 
 Write-Host "`n  Power Plan Switcher" -ForegroundColor Cyan
-Write-Host "  ─────────────────────────────────────────────────"
+Write-Host "  -------------------------------------------------"
 
 $current = [regex]::Match((powercfg /getactivescheme), '[0-9a-fA-F-]{36}').Value
 $curName = $plans.GetEnumerator() | Where-Object Value -eq $current | Select-Object -ExpandProperty Key

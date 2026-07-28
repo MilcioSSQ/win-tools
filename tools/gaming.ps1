@@ -74,7 +74,7 @@ function Restore {
 }
 
 Write-Host "`n  Gaming Tweaks" -ForegroundColor Cyan
-Write-Host "  ─────────────────────────────────────────────────"
+Write-Host "  -------------------------------------------------"
 Write-Host "  [1] Apply    [2] Restore    [0] Back"
 switch (Read-Host "  Select") {
     '1' { Apply   }

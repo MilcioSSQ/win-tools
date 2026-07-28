@@ -1,6 +1,6 @@
 #Requires -Version 5.1
 Write-Host "`n  Windows Defender" -ForegroundColor Cyan
-Write-Host "  ─────────────────────────────────────────────────"
+Write-Host "  -------------------------------------------------"
 
 try {
     $s = Get-MpComputerStatus

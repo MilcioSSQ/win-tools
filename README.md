@@ -17,25 +17,15 @@
 
 ---
 
-## ⚡ How to Use
+## ⚡ Quick Start
 
-**1.** Download this repo (green `Code` button → `Download ZIP`) and extract it.
-
-**2.** Open **PowerShell as Administrator**.
-
-**3.** Navigate to the folder and run the script:
+Paste this into PowerShell — that's it:
 
 ```powershell
-cd ~\Downloads\win-tools-main
-.\win-tools.ps1
+irm https://raw.githubusercontent.com/MilcioSSQ/win-tools/main/install.ps1 | iex
 ```
 
-**4.** Pick a tool from the menu — done!
-
-> If PowerShell blocks the script, run this first:
-> ```powershell
-> Set-ExecutionPolicy Bypass -Scope Process
-> ```
+> Downloads the latest version, elevates to admin, and opens the menu. Nothing is installed permanently.
 
 ---
 
@@ -92,15 +82,22 @@ cd ~\Downloads\win-tools-main
 
 ---
 
-## 💻 Run a Single Tool
+## 💻 Manual Usage
 
-You can also run any tool standalone without the menu:
+If you cloned or downloaded the repo:
 
 ```powershell
-.\tools\sysinfo.ps1
-.\tools\cleaner.ps1
-.\tools\gaming.ps1
+powershell -ExecutionPolicy Bypass -File .\win-tools.ps1
 ```
+
+Or run any tool standalone:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\tools\sysinfo.ps1
+powershell -ExecutionPolicy Bypass -File .\tools\cleaner.ps1
+```
+
+The launcher elevates itself automatically — just approve the UAC prompt.
 
 ---
 
@@ -108,6 +105,7 @@ You can also run any tool standalone without the menu:
 
 ```
 win-tools/
+├── install.ps1          # one-line launcher (irm | iex)
 ├── win-tools.ps1        # main launcher / menu
 ├── tools/
 │   ├── bloatware.ps1

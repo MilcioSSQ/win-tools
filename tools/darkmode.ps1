@@ -6,7 +6,7 @@ $sys  = (Get-ItemPropertyValue $reg -Name SystemUsesLightTheme -ErrorAction Sile
 $mode = if ($apps -and $sys) { 'Dark' } elseif (-not $apps -and -not $sys) { 'Light' } else { 'Mixed' }
 
 Write-Host "`n  Dark Mode Toggle" -ForegroundColor Cyan
-Write-Host "  ─────────────────────────────────────────────────"
+Write-Host "  -------------------------------------------------"
 Write-Host "  Current : $mode"
 Write-Host ""
 Write-Host "  [1] Dark    [2] Light    [0] Back"

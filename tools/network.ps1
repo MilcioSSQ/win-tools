@@ -1,6 +1,6 @@
 #Requires -Version 5.1
 Write-Host "`n  Network Info" -ForegroundColor Cyan
-Write-Host "  ─────────────────────────────────────────────────"
+Write-Host "  -------------------------------------------------"
 
 $adapters = Get-CimInstance Win32_NetworkAdapterConfiguration | Where-Object { $_.IPEnabled }
 foreach ($a in $adapters) {
