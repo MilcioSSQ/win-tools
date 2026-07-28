@@ -34,7 +34,7 @@ while ($true) {
     Write-Host "  ─────────────────────────────────────────────────"
     Write-Host "  [1]  Bloatware remover"        -ForegroundColor Cyan
     Write-Host "  [2]  Autostart cleaner"         -ForegroundColor Cyan
-    Write-Host "  [3]  Temp & cache cleaner"      -ForegroundColor Cyan
+    Write-Host "  [3]  Temp `& cache cleaner"      -ForegroundColor Cyan
     Write-Host "  [4]  Mouse jiggle"              -ForegroundColor Cyan
     Write-Host "  [5]  Gaming tweaks"             -ForegroundColor Cyan
     Write-Host "  [6]  Defender scan"             -ForegroundColor Cyan
