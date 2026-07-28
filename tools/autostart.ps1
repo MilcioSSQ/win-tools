@@ -1,75 +1,114 @@
-#Requires -Version 5.1
-$keep = @('nvidia','amd','radeon','realtek','nahimic','audio','lghub','logitech',
-          'razer','synapse','steelseries','corsair','synaptics','elan',
-          'defender','antimalware','msi.center','armoury')
+# ============================================
+# Autostart NUCLEAR Cleanup
+# Entfernt UWP Autostart-Registrierungen HART
+# Als Administrator ausfuehren!
+# ============================================
 
-$hives = @(
-    'HKCU:\Software\Microsoft\Windows\CurrentVersion\Run',
-    'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run',
-    'HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run'
+Write-Host "=== Autostart NUCLEAR Cleanup ===" -ForegroundColor Cyan
+Write-Host ""
+
+$count = 0
+
+# --- UWP Apps: Startup Task State auf 1 (disabled) setzen ---
+Write-Host "[1/3] UWP Startup Tasks hart deaktivieren..." -ForegroundColor Yellow
+
+$uwpPatterns = @(
+    "*Xbox*",
+    "*YourPhone*", "*PhoneLink*", "*SmartphoneLink*",
+    "*CrossDevice*", "*MobileDevices*",
+    "*PowerAutomate*",
+    "*MSI*Center*",
+    "*Terminal*"
 )
-$startup = @(
-    [Environment]::GetFolderPath('Startup'),
-    "$env:ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
-)
-$backup = Join-Path $env:LOCALAPPDATA 'win-tools-autostart.json'
 
-function Is-Protected($name, $val) {
-    foreach ($k in $keep) { if ($name -match $k -or $val -match $k) { return $true } }
-    return $false
-}
-
-function Get-Entries {
-    $list = [System.Collections.Generic.List[object]]::new()
-    foreach ($h in $hives) {
-        if (-not (Test-Path $h)) { continue }
-        (Get-ItemProperty $h).PSObject.Properties |
-            Where-Object { $_.Name -notmatch '^PS' -and $_.Name -ne '(default)' } |
-            ForEach-Object { $list.Add([pscustomobject]@{ type='reg'; hive=$h; name=$_.Name; value=[string]$_.Value }) }
-    }
-    foreach ($f in $startup) {
-        Get-ChildItem $f -File -ErrorAction SilentlyContinue |
-            Where-Object Name -ne 'desktop.ini' |
-            ForEach-Object { $list.Add([pscustomobject]@{ type='file'; path=$_.FullName; name=$_.Name }) }
-    }
-    $list
-}
-
-Write-Host "`n  Autostart Cleaner" -ForegroundColor Cyan
-Write-Host "  ─────────────────────────────────────────────────"
-
-$entries = Get-Entries
-if (-not $entries) { Write-Host "  No startup entries found." -ForegroundColor Green; return }
-
-$disable = $entries | Where-Object { -not (Is-Protected $_.name ($_.value + $_.path)) }
-$protect  = $entries | Where-Object {      Is-Protected $_.name ($_.value + $_.path)  }
-
-Write-Host "  Will disable:" -ForegroundColor Yellow
-$disable | ForEach-Object { Write-Host "    - $($_.name)" -ForegroundColor Yellow }
-Write-Host "  Protected (kept):" -ForegroundColor DarkGray
-$protect  | ForEach-Object { Write-Host "    = $($_.name)" -ForegroundColor DarkGray }
-
-if (-not $disable) { Write-Host "`n  Nothing to disable." -ForegroundColor Green; return }
-if ((Read-Host "`n  Disable yellow list? [JA]") -cne 'JA') { return }
-
-$saved = @()
-$dir   = Join-Path $env:LOCALAPPDATA 'win-tools-disabled-startup'
-New-Item $dir -ItemType Directory -Force | Out-Null
-
-foreach ($e in $disable) {
-    try {
-        if ($e.type -eq 'reg') {
-            $saved += [pscustomobject]@{ type='reg'; hive=$e.hive; name=$e.name; value=$e.value }
-            Remove-ItemProperty $e.hive -Name $e.name -ErrorAction Stop
-        } else {
-            $dest = Join-Path $dir ([IO.Path]::GetFileName($e.path))
-            Move-Item $e.path $dest -Force -ErrorAction Stop
-            $saved += [pscustomobject]@{ type='file'; original=$e.path; movedTo=$dest }
+$appDataPath = "HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\CurrentVersion\AppModel\SystemAppData"
+if (Test-Path $appDataPath) {
+    Get-ChildItem $appDataPath -ErrorAction SilentlyContinue | ForEach-Object {
+        $familyName = $_.PSChildName
+        $startupPath = Join-Path $_.PSPath "StartupTasks"
+        if (Test-Path $startupPath) {
+            $matched = $false
+            foreach ($pattern in $uwpPatterns) {
+                if ($familyName -like $pattern) { $matched = $true; break }
+            }
+            if ($matched) {
+                Get-ChildItem $startupPath -ErrorAction SilentlyContinue | ForEach-Object {
+                    $currentState = (Get-ItemProperty $_.PSPath -Name "State" -ErrorAction SilentlyContinue).State
+                    if ($currentState -ne 1) {
+                        Set-ItemProperty -Path $_.PSPath -Name "State" -Value 1 -Force -ErrorAction SilentlyContinue
+                    }
+                    # UserEnabledStartupOnce auf 0 setzen damit Windows es nicht reaktiviert
+                    Set-ItemProperty -Path $_.PSPath -Name "UserEnabledStartupOnce" -Value 0 -Force -ErrorAction SilentlyContinue
+                    Write-Host "  [x] $familyName -> disabled" -ForegroundColor Green
+                    $script:count++
+                }
+            }
         }
-        Write-Host "  disabled  $($e.name)" -ForegroundColor Green
-    } catch { Write-Host "  failed    $($e.name)" -ForegroundColor Red }
+    }
 }
 
-$saved | ConvertTo-Json -Depth 4 | Set-Content $backup -Encoding UTF8
-Write-Host "`n  Done. Backup: $backup" -ForegroundColor Green
-Write-Host "  Run with -Restore to undo." -ForegroundColor DarkGray
+# --- Registry Run + StartupApproved komplett saeubern ---
+Write-Host "[2/3] Registry Autostart-Eintraege entfernen..." -ForegroundColor Yellow
+
+$keywords = @(
+    "Smartphone", "YourPhone", "PhoneLink",
+    "MobileDevices", "CrossDevice",
+    "MSI", "MSICenter",
+    "msedge", "Edge",
+    "OneDrive",
+    "Roblox",
+    "Xbox", "GameBar",
+    "PowerAutomate",
+    "Have",
+    "browser_assistant",
+    "EpicGames"
+)
+
+$allKeys = @(
+    "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run",
+    "HKLM:\Software\Microsoft\Windows\CurrentVersion\Run",
+    "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run",
+    "HKLM:\Software\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run",
+    "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\StartupFolder"
+)
+
+foreach ($key in $allKeys) {
+    if (-not (Test-Path $key)) { continue }
+    $item = Get-Item $key -ErrorAction SilentlyContinue
+    if (-not $item) { continue }
+    foreach ($prop in $item.Property) {
+        $val = try { (Get-ItemPropertyValue $key -Name $prop -ErrorAction SilentlyContinue) } catch { "" }
+        foreach ($kw in $keywords) {
+            if ($prop -like "*$kw*" -or "$val" -like "*$kw*") {
+                Remove-ItemProperty -Path $key -Name $prop -Force -ErrorAction SilentlyContinue
+                Write-Host "  [x] $key -> $prop" -ForegroundColor Green
+                $count++
+                break
+            }
+        }
+    }
+}
+
+# --- Scheduled Tasks ---
+Write-Host "[3/3] Scheduled Tasks deaktivieren..." -ForegroundColor Yellow
+$taskKW = @("Xbox", "OneDrive", "Edge", "MobileDevices", "YourPhone", "PhoneLink", "PowerAutomate", "Roblox", "EpicGames", "MSI", "BrowserAssistant", "CrossDevice")
+Get-ScheduledTask -ErrorAction SilentlyContinue | ForEach-Object {
+    foreach ($kw in $taskKW) {
+        if ($_.TaskName -like "*$kw*" -or $_.TaskPath -like "*$kw*") {
+            Disable-ScheduledTask -TaskName $_.TaskName -TaskPath $_.TaskPath -ErrorAction SilentlyContinue | Out-Null
+            Write-Host "  [x] Task: $($_.TaskName)" -ForegroundColor Green
+            $count++
+            break
+        }
+    }
+}
+
+Write-Host ""
+Write-Host "$count Eintraege bearbeitet!" -ForegroundColor Cyan
+Write-Host ""
+Write-Host "WICHTIG: PC jetzt neustarten!" -ForegroundColor Red
+Write-Host ""
+Write-Host "Falls Eintraege nach dem Neustart wieder auftauchen:" -ForegroundColor DarkYellow
+Write-Host "  -> Die App selbst deinstallieren (Einstellungen > Apps)" -ForegroundColor DarkYellow
+Write-Host "  -> Windows registriert UWP-Autostart neu solange die App installiert ist" -ForegroundColor DarkYellow
+Read-Host "Enter druecken zum Beenden"
